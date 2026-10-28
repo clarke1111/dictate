@@ -19,6 +19,8 @@ When macOS asks, allow Dictate **Microphone**, **Accessibility** and **Input Mon
 - **Hold Left ⌃** — talk, release to transcribe and paste at the cursor
 - **Tap Left ⌃** — hands-free; tap again to stop
 - Menu bar: `◯` ready · `●` listening · `…` transcribing
+- A bubble at the bottom of the screen shows the words as you talk, then the final text with a **Copy** button. If no text field had focus it stays up until you copy or dismiss it
+- Menu → **Copy last transcript** gets the most recent one back any time; **Live preview** turns off the as-you-talk text (saves GPU)
 - Every transcript is also appended to `~/Documents/Dictation/YYYY-MM-DD.md`
 - Filler words (um/uh) are stripped; your clipboard is restored after pasting
 
@@ -29,6 +31,7 @@ The app runs `dictate.py` from the cloned folder, so `git pull` picks up changes
 ## Troubleshooting
 
 - **Hotkey does nothing after a rebuild:** macOS sometimes forgets the permissions. Toggle Dictate off and on in Accessibility and Input Monitoring, then relaunch.
+- **Text didn't paste:** it's still in the bubble, under **Copy last transcript**, and in the notes file. The log records why each clip was pasted or dropped (too short, silent, cancelled because ⌃ was used with another key)
 - **Logs:** `~/Library/Logs/Dictate.log`
 - **Run in a terminal to see errors live:** `uv run --script dictate.py` (grant the permissions to your terminal app instead)
 
