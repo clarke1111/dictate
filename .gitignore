@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# macOS
+.DS_Store
+
+# Built app (build-app.sh writes to ~/Applications, but just in case)
+*.app/
