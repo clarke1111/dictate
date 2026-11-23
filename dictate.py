@@ -91,16 +91,13 @@ class Recorder:
 
     def start(self):
         self.chunks = []
-        try:
-            self._open()
-        except sd.PortAudioError:
-            # PortAudio caches the device list at import. When a mic disappears or
-            # re-enumerates (USB/monitor sleep, AirPods, etc.) the cached IDs go stale
-            # and every open fails until PortAudio is reinitialized.
-            self._close()
-            sd._terminate()
-            sd._initialize()
-            self._open()
+        # PortAudio caches the device list at init. When the default mic changes or
+        # re-enumerates (USB/monitor sleep, AirPods, etc.) the cached IDs go stale:
+        # the open either fails, or "succeeds" on a dead device and records pure
+        # digital silence. Reinitializing costs ~5ms, so do it on every start.
+        sd._terminate()
+        sd._initialize()
+        self._open()
 
     def _open(self):
         self.stream = sd.InputStream(
